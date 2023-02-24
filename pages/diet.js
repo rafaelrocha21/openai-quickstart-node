@@ -4,16 +4,13 @@ import { useState } from "react";
 import styles from "./index.module.css";
 
 export default function Home() {
-
-  const [diasDieta, setdiasDieta] = useState(7);
-  const [numRefeicoes, setnumRefeicoes] = useState(3);
-  const [numOpcoes, setnumOpcoes] = useState(2);
-  const [doencas, setdoencas] = useState('');
+ //vezesAcad, peso, altura, objetivo
+  const [vezesAcad, setvezesAcad] = useState('');
   const [peso, setpeso] = useState('');
   const [altura, setaltura] = useState('');
-  const [idade, setidade] = useState('');
-  const [numExercicios, setnumExercicios] = useState('');
-  const [alergias, setalergias] = useState('');
+  const [nivel, setnivel] = useState('');
+  const [objetivo, setobjetivo] = useState('');
+
  
   const [loading, setLoading] = useState(false);
 
@@ -34,11 +31,12 @@ export default function Home() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ diasDieta, numRefeicoes, numOpcoes, doencas, peso, altura, idade, numExercicios, alergias }),
+          body: JSON.stringify({ vezesAcad, peso, altura, nivel, objetivo}),
         });
-  
+        
         const data = await response.json();
-        setResult(data.result.replace('\n', '<br/>'));
+        
+        setResult(data.result.replaceAll('\n', '<br />'));
       } catch(e){
         alert('Falha ao enviar dados, tente novamente mais tarde');
       } finally {
@@ -50,111 +48,75 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>OpenAI Quickstart</title>
+        <title>Personaly</title>
         <link rel="icon" href="/dog.png" />
       </Head>
 
       <main className={styles.main}>
         <img src="/dog.png" className={styles.icon} />
-        <h3>MyNutri</h3>
+        <h3>Personaly</h3>
+        <p>Transforme seus treinos com inteligência artificial.</p>
         <form onSubmit={onSubmit}>
 
 
-          <label>Dias de Dieta</label>
+          <label>Quantas vezes você quer ir na academia por semana?</label>
           <select
-            name="diasDieta"
-            value={diasDieta}
-            onChange={(e) => setdiasDieta(e.target.value)}
+            name="vezesAcad"
+            value={vezesAcad}
+            onChange={(e) => setvezesAcad(e.target.value)}
           >
-            <option value="sete">7 Dias</option>
-            <option value="catorze">14 Dias</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
           </select>
 
 
-          <label>Numero de Refeições por dia</label>
-          <select
-            name="numRefeicoes"
-            value={numRefeicoes}
-            onChange={(e) => setnumRefeicoes(e.target.value)}
-          >
-            <option value="tresRefeicoes">3 </option>
-            <option value="quatroRefeicoes">4</option>
-            <option value="cincoRefeicoes">5</option>
-          </select>
-
-          <label>Quantas variações de prato por refeição?</label>
-          <select
-            name="numOpcoes"
-            value={numOpcoes}
-            onChange={(e) => setnumOpcoes(e.target.value)}
-          >
-            <option value="umaVariacao">1</option>
-            <option value="duasVariacoes">2</option>
-          </select>
-
-          <label>Você possui alguma doença crônica? Separe cada doença com vírgulas "," </label>
-          <input
-            type="text"
-            name="doencas"
-            value={doencas}
-            onChange={(e) => setdoencas(e.target.value)}
-            placeholder = "Nenhuma Doença"
-            required
-          />
-          
-          <label>Qual seu peso atual em kilos?</label>
+          <label>Qual seu peso em kilos?</label>
           <input
             type="number"
             name="peso"
             value={peso}
             onChange={(e) => setpeso(Number.parseInt(e.target.value))}
-            placeholder = "00"
-            required
-          />
+         />
 
-          <label>Qual sua altura atual em centímetros?</label>
+          <label>Qual seu nível?</label>
+          <select
+            name="nivel"
+            value={nivel}
+            onChange={(e) => setnivel(e.target.value)}
+          >
+            <option value="3">Iniciante</option>
+            <option value="4">Intermediário</option>
+            <option value="5">Avançado</option>
+          </select>
+
+
+          <label>Qual seu tamanho em centímetros?</label>
           <input
             type="number"
             name="altura"
             value={altura}
             onChange={(e) => setaltura(Number.parseInt(e.target.value))}
-            placeholder = "00"
-            required
-          />
-
-          <label>Qual sua idade em anos?</label>
-          <input
-            type="number"
-            name="idade"
-            value={idade}
-            onChange={(e) => setidade(Number.parseInt(e.target.value))}
-            placeholder = "00"
-            required
-          />
-
-          <label>Quantas vezes você faz exercicio por semana?</label>
-          <input
-            type="number"
-            name="numExercicios"
-            value={numExercicios}
-            onChange={(e) => setnumExercicios(Number.parseInt(e.target.value))}
-            placeholder = "00"
-            required
-          />
+         />
           
-          <label>Você possui alguma alergia? Separe cada alergia com vírgulas ",".</label>
-          <input
-            type="text"
-            name="alergias"
-            value={alergias}
-            onChange={(e) => setalergias(e.target.value)}
-            placeholder = "Nada"
-            required
-          />
+          <label>Qual seu objetivo?</label>
+          <select
+            name="objetivo"
+            value={objetivo}
+            onChange={(e) => setobjetivo(e.target.value)}
+          >
+            <option value="Perder Gordura">Perder Gordura</option>
+            <option value="Ganhar Musculos">Ganhar Musculos</option>
+            <option value="Melhorar Condicionamento">Melhorar Condicionamento</option>
+            <option value="Melhorar Saude Cardíaca">Melhorar Saude Cardíaca</option>
+          </select>
 
 
 
-          <input type="submit" value="Generate names" />
+
+          <input type="submit" value="Monte meu Treino" />
           
         </form>
 

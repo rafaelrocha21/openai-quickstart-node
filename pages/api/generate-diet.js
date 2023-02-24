@@ -6,10 +6,10 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 export default async function (req, res) {
-const { diasDieta, numRefeicoes, numOpcoes, doencas, peso, altura, idade, numExercicios, alergias } = req.body;
-    const prompt = generatePrompt(diasDieta, numRefeicoes, numOpcoes, doencas, peso, altura, idade, numExercicios, alergias)
+const { vezesAcad, peso, altura, nivel, objetivo } = req.body;
+    const prompt = generatePrompt(vezesAcad, peso, altura, nivel, objetivo)
     console.log(req.body);
-
+    
     const completion = await openai.createCompletion({
       model: "text-davinci-003",
       prompt: prompt,
@@ -19,7 +19,6 @@ const { diasDieta, numRefeicoes, numOpcoes, doencas, peso, altura, idade, numExe
     res.status(200).json({ result: completion.data.choices[0].text });
 }
 
-function generatePrompt(diasDieta, numRefeicoes, numOpcoes, doencas, peso, altura, idade, numExercicios, alergias) {
-  return `Crie uma dieta completa por ${diasDieta} dias com ${numRefeicoes} refeições por dia com ${numOpcoes} opções diferentes para cada refeição, para uma pessoa que possui ${doencas} e tem ${peso} kilos e ${altura} centímetros de altura, ${idade} anos de idade, que faz ${numExercicios} exercícios por semana e tem alergia a ${alergias}`;
-
+function generatePrompt(vezesAcad, peso, altura, nivel, objetivo) {
+  return `Crie uma série de academia ${vezesAcad} vezes na semana, sendo cada dia um grupamento muscular diferente, com ${nivel} exercícios por dia, para uma pessoa que tem ${peso} kilos, ${altura} centimetros de altura que busca ${objetivo}`;
 }
