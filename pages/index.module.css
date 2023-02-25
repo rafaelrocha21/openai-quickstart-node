@@ -22,6 +22,7 @@
   font-family: "ColfaxAI", Helvetica, sans-serif;
 }
 .main {
+  margin:-8px;
   display: flex;
   flex-direction: column;
   align-items: center;

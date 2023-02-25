@@ -6,6 +6,7 @@ import styles from "./index.module.css";
 export default function Home() {
  //vezesAcad, peso, altura, objetivo
   const [vezesAcad, setvezesAcad] = useState('');
+  const [sexo, setsexo] = useState('');
   const [peso, setpeso] = useState('');
   const [altura, setaltura] = useState('');
   const [nivel, setnivel] = useState('');
@@ -31,7 +32,7 @@ export default function Home() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ vezesAcad, peso, altura, nivel, objetivo}),
+          body: JSON.stringify({ vezesAcad, sexo, peso, altura, nivel, objetivo}),
         });
         
         const data = await response.json();
@@ -70,6 +71,17 @@ export default function Home() {
             <option value="5">5</option>
             <option value="6">6</option>
             <option value="7">7</option>
+          </select>
+
+          <label>Qual seu sexo?</label>
+          <select
+            name="vezesAcad"
+            value={sexo}
+            onChange={(e) => setsexo(e.target.value)}
+          >
+            <option value="masculino">Masculino</option>
+            <option value="Feminino">Feminino</option>
+            
           </select>
 
 

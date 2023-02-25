@@ -6,8 +6,8 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 export default async function (req, res) {
-const { vezesAcad, peso, altura, nivel, objetivo } = req.body;
-    const prompt = generatePrompt(vezesAcad, peso, altura, nivel, objetivo)
+const { vezesAcad, sexo, peso,  altura, nivel, objetivo } = req.body;
+    const prompt = generatePrompt(vezesAcad, sexo, peso, altura, nivel, objetivo)
     console.log(req.body);
     
     const completion = await openai.createCompletion({
@@ -19,6 +19,6 @@ const { vezesAcad, peso, altura, nivel, objetivo } = req.body;
     res.status(200).json({ result: completion.data.choices[0].text });
 }
 
-function generatePrompt(vezesAcad, peso, altura, nivel, objetivo) {
-  return `Crie uma série de academia ${vezesAcad} vezes na semana, sendo cada dia um grupamento muscular diferente, com ${nivel} exercícios por dia, para uma pessoa que tem ${peso} kilos, ${altura} centimetros de altura que busca ${objetivo}`;
+function generatePrompt(vezesAcad, sexo, peso, altura, nivel, objetivo) {
+  return `Crie uma série de academia para uma pessoa do sexo ${sexo} que malha ${vezesAcad} vezes na semana, sendo cada dia um grupamento muscular diferente, com ${nivel} exercícios por dia, para uma pessoa que tem ${peso} kilos, ${altura} centimetros de altura que busca ${objetivo}`;
 }
